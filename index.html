@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Q2 FY2025 — Interactive Earnings Report</title>
+
+    <!-- Reveal.js core & theme via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css" id="theme" />
+
+    <!-- Syntax highlighting (highlight.js theme) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/monokai.css" />
+
+    <style>
+      /* Custom tweaks */
+      .reveal { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; }
+      .reveal .slides { text-align: left; }
+      .brand { font-weight: 700; letter-spacing: .25px; }
+      .subtitle { font-size: 1rem; opacity: .85; }
+      .kpi { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+      .kpi > div { border-radius: 16px; padding: 18px; box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+      .chart { width: 100%; height: 420px; }
+      .muted { opacity: .7; }
+      .footnote { font-size: .8rem; opacity: .7; margin-top: .75rem; }
+      .right { text-align: right; }
+      /* Responsive base size */
+      :root { --r-main-font-size: calc(.65vw + .65vh + .6vmin); }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- Title -->
+        <section>
+          <h2 class="brand">Q2 FY2025 — Interactive Earnings Report</h2>
+          <p class="subtitle">Prepared by: Technical Consultant, Capital Markets Analytics</p>
+          <p class="subtitle">Contact: <strong>23ds3000034@ds.study.iitm.ac.in</strong></p>
+          <p class="muted">Use <kbd>→</kbd> / <kbd>↓</kbd> to navigate. Press <kbd>S</kbd> for speaker notes.</p>
+          <aside class="notes">Welcome everyone. Today we’ll cover revenue, margins, guidance, and risk. I’ll also show interactive charts you can explore live.</aside>
+        </section>
+
+        <!-- Agenda with fragments -->
+        <section>
+          <h3>Agenda</h3>
+          <ul>
+            <li class="fragment">Highlights & KPIs</li>
+            <li class="fragment">Revenue & Margin Analysis</li>
+            <li class="fragment">Cash Flow & Valuation</li>
+            <li class="fragment">Guidance & Risks</li>
+            <li class="fragment fade-up">Q&A</li>
+          </ul>
+          <aside class="notes">Reveal items gradually to control pacing. Pause briefly after each bullet to discuss.</aside>
+        </section>
+
+        <!-- Markdown slide (at least one) -->
+        <section data-markdown>
+          <textarea data-template>
+## KPI Snapshot _(Markdown Slide)_
+
+- **Revenue**: $2.41B _(↑ 7% YoY)_
+- **Gross Margin**: 41.2%
+- **Operating Margin**: 18.5%
+- **EPS (Diluted)**: $1.34
+- **Free Cash Flow**: $420M
+
+> Notes: KPIs are illustrative placeholders for demo purposes.
+          </textarea>
+          <aside class="notes">This slide demonstrates RevealJS Markdown support. Replace metrics with your actual numbers.</aside>
+        </section>
+
+        <!-- Code sample with syntax highlighting and line highlights -->
+        <section>
+          <h3>Reconcile GAAP → Non‑GAAP (Example)</h3>
+          <pre><code class="language-python" data-line-numbers="1-3|5-9|11-13">
+import pandas as pd
+
+data = pd.DataFrame({
+    "metric": ["GAAP_EPS","StockComp","Restructuring","NonGAAP_EPS"],
+    "value":  [1.12,        0.15,        0.07,            1.34]
+})
+
+adj = data.loc[data["metric"].isin(["StockComp","Restructuring"]), "value"].sum()
+non_gaap = data.loc[data["metric"]=="GAAP_EPS","value"].item() + adj
+
+print({"NonGAAP_EPS": round(non_gaap, 2)})
+          </code></pre>
+          <aside class="notes">Use line highlights to guide attention. The adjustment here is illustrative only.</aside>
+        </section>
+
+        <!-- Mathematics (financial formulas) -->
+        <section>
+          <h3>Financial Math</h3>
+          <p><strong>NPV</strong>: \( \mathrm{NPV} = \sum_{t=1}^{T} \frac{CF_t}{(1+r)^t} - C_0 \)</p>
+          <p><strong>CAGR</strong>: \( \mathrm{CAGR} = \left(\frac{V_{\text{end}}}{V_{\text{start}}}\right)^{\tfrac{1}{n}} - 1 \)</p>
+          <p><strong>WACC</strong>: \( \mathrm{WACC} = \tfrac{E}{D+E} r_e + \tfrac{D}{D+E} r_d(1-\tau) \)</p>
+          <aside class="notes">Briefly review discount rate assumptions before applying NPV. Remind audience about sensitivity to r.</aside>
+        </section>
+
+        <!-- Interactive chart (D3) -->
+        <section id="slide-revenue">
+          <h3>Interactive Revenue Trend</h3>
+          <div id="rev-chart" class="chart"></div>
+          <p class="footnote">Click a bar to toggle highlight. Data shown for demo.</p>
+          <aside class="notes">This chart is live in the browser and can respond to input. Use it to discuss seasonality.</aside>
+        </section>
+
+        <!-- Step-by-step fragments (stack) -->
+        <section>
+          <h3>Margin Bridge (QoQ)</h3>
+          <div class="r-stack">
+            <div class="fragment">
+              <h4>Start: 39.8%</h4>
+              <p class="muted">Q1 Gross Margin</p>
+            </div>
+            <div class="fragment fade-in-then-semi-out">
+              <h4>+120 bps</h4>
+              <p class="muted">Mix shift to premium SKUs</p>
+            </div>
+            <div class="fragment fade-in-then-semi-out">
+              <h4>-60 bps</h4>
+              <p class="muted">Input cost inflation</p>
+            </div>
+            <div class="fragment">
+              <h4>End: 41.2%</h4>
+              <p class="muted">Q2 Gross Margin</p>
+            </div>
+          </div>
+          <aside class="notes">Advance step-by-step to narrate the bridge clearly.</aside>
+        </section>
+
+        <!-- Speaker notes example inline -->
+        <section>
+          <h3>Guidance & Risks</h3>
+          <ul>
+            <li class="fragment">FY Revenue growth: 6–8%</li>
+            <li class="fragment">Operating margin: 18–19%</li>
+            <li class="fragment">Key risks: supply chain, FX, rate volatility</li>
+          </ul>
+          <aside class="notes">If time is short, summarize guidance ranges and pivot to Q&A.</aside>
+        </section>
+
+        <!-- Closing with contact -->
+        <section>
+          <h3>Thank You</h3>
+          <p>Contact: <strong>23ds3000034@ds.study.iitm.ac.in</strong></p>
+          <p class="muted">Refresh cache by appending <code>?v=2</code> to the URL.</p>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/math/math.js"></script>
+
+    <!-- D3 for the interactive chart -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+
+    <script>
+      // Initialize Reveal
+      Reveal.initialize({
+        width: 1280,
+        height: 720,
+        margin: 0.06,
+        controls: true,
+        progress: true,
+        history: true,
+        transition: 'slide',
+        plugins: [ RevealMarkdown, RevealHighlight, RevealMath, RevealNotes ],
+        math: {
+          // Use MathJax v3 via CDN
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+          tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }
+        }
+      });
+
+      // Simple interactive D3 column chart
+      (function buildRevenueChart(){
+        const el = document.getElementById('rev-chart');
+        if (!el) return;
+
+        const data = [
+          { q: 'Q2-24', v: 2.15 },
+          { q: 'Q3-24', v: 2.22 },
+          { q: 'Q4-24', v: 2.31 },
+          { q: 'Q1-25', v: 2.38 },
+          { q: 'Q2-25', v: 2.41 }
+        ];
+
+        const margin = { top: 10, right: 20, bottom: 40, left: 60 };
+        const width = el.clientWidth - margin.left - margin.right;
+        const height = el.clientHeight - margin.top - margin.bottom;
+
+        const svg = d3.select(el).append('svg')
+          .attr('width', width + margin.left + margin.right)
+          .attr('height', height + margin.top + margin.bottom)
+          .append('g')
+          .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleBand().domain(data.map(d=>d.q)).range([0, width]).padding(0.22);
+        const y = d3.scaleLinear().domain([0, d3.max(data, d=>d.v)*1.2]).range([height, 0]);
+
+        svg.append('g').attr('transform', `translate(0,${height})`).call(d3.axisBottom(x));
+        svg.append('g').call(d3.axisLeft(y).ticks(6).tickFormat(d=>`$${d.toFixed(1)}B`));
+
+        const bars = svg.selectAll('rect').data(data).enter().append('rect')
+          .attr('x', d=>x(d.q))
+          .attr('y', d=>y(d.v))
+          .attr('width', x.bandwidth())
+          .attr('height', d=>height - y(d.v))
+          .attr('rx', 6)
+          .style('cursor', 'pointer')
+          .on('click', function(){
+            const isActive = d3.select(this).classed('active');
+            bars.classed('active', false).attr('opacity', 1);
+            d3.select(this).classed('active', !isActive).attr('opacity', isActive ? 1 : 0.5);
+          });
+
+        // Redraw on resize to keep responsiveness
+        window.addEventListener('resize', () => {
+          const current = el.querySelector('svg');
+          if (current) current.remove();
+          buildRevenueChart();
+        }, { passive: true });
+      })();
+
+      // Example: do something when entering the chart slide
+      Reveal.addEventListener('slidechanged', (e) => {
+        if (e.currentSlide && e.currentSlide.id === 'slide-revenue') {
+          // Could trigger animations or data refresh here
+          console.debug('Entered revenue slide');
+        }
+      });
+    </script>
+  </body>
+</html>
